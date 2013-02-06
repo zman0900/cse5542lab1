@@ -1,5 +1,7 @@
 #include "GlGlut.h"
 
+using namespace std;
+
 GlGlut *GlGlut::instance = NULL;
 
 GlGlut::GlGlut() {
@@ -22,6 +24,10 @@ void GlGlut::start(int *argc, char *argv[]) {
 
 	// Register callbacks
 	glutDisplayFunc(displayWrapper);
+	glutKeyboardFunc(keyboardWrapper);
+	glutMouseFunc(mouseClickWrapper);
+	glutMotionFunc(mouseMoveWrapper);
+	glutReshapeFunc(reshapeWrapper);
 
 	// Start
 	glutMainLoop();
@@ -32,6 +38,18 @@ void GlGlut::display() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glutSwapBuffers();
+}
+
+void GlGlut::keyboard(unsigned char key, int mousex, int mousey) {
+	cout << "key: " << (int) key << endl;
+}
+
+void GlGlut::mouseClick(int button, int state, int x, int y) {
+	cout << "click b:" << button << " x:" << x << " y:" << y << endl;
+}
+
+void GlGlut::mouseMove(int x, int y) {
+	cout << "move x:" << x << " y:" << y << endl;
 }
 
 void GlGlut::reshape(int w, int h) {
@@ -45,6 +63,18 @@ void GlGlut::setInstance() {
 //// Static wrappers
 void GlGlut::displayWrapper() {
 	instance->display();
+}
+
+void GlGlut::keyboardWrapper(unsigned char key, int mousex, int mousey) {
+	instance->keyboard(key, mousex, mousey);
+}
+
+void GlGlut::mouseClickWrapper(int button, int state, int x, int y) {
+	instance->mouseClick(button, state, x, y);
+}
+
+void GlGlut::mouseMoveWrapper(int x, int y) {
+	instance->mouseMove(x, y);
 }
 
 void GlGlut::reshapeWrapper(int w, int h) {
