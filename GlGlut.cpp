@@ -4,40 +4,6 @@ using namespace std;
 
 GlGlut *GlGlut::instance = NULL;
 
-GlGlut::GlGlut() {
-	screen_width = DEF_SCREEN_W;
-	screen_height = DEF_SCREEN_H;
-	translate_factor = TRANSLATE_FACTOR;
-	zoom_factor = ZOOM_FACTOR;
-}
-
-GlGlut::~GlGlut() {
-	// Nothing to do here
-}
-
-void GlGlut::start(int *argc, char *argv[]) {
-	setInstance();
-
-	// Init glut
-	glutInit(argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
-	glutInitWindowSize(screen_width, screen_height);
-	glutCreateWindow(WINDOW_TITLE);
-
-	// Register callbacks
-	glutDisplayFunc(displayWrapper);
-	glutKeyboardFunc(keyboardWrapper);
-	glutMouseFunc(mouseClickWrapper);
-	glutMotionFunc(mouseMoveWrapper);
-	glutReshapeFunc(reshapeWrapper);
-	glutSpecialFunc(specialWrapper);
-
-	// Start
-	reshape(screen_width, screen_height);
-	glutIdleFunc(idleWrapper);
-	glutMainLoop();
-}
-
 //// Glut callbacks /////
 void GlGlut::display() {
 	glClearColor(0, 0, 0, 1);
@@ -123,10 +89,6 @@ void GlGlut::special(int key, int mousex, int mousey) {
 }
 /////////////////////////
 
-void GlGlut::setInstance() {
-	instance = this;
-}
-
 //// Static wrappers ////
 void GlGlut::displayWrapper() {
 	instance->display();
@@ -156,3 +118,41 @@ void GlGlut::specialWrapper(int key, int mousex, int mousey) {
 	instance->special(key, mousex, mousey);
 }
 /////////////////////////
+
+GlGlut::GlGlut() {
+	screen_width = DEF_SCREEN_W;
+	screen_height = DEF_SCREEN_H;
+	translate_factor = TRANSLATE_FACTOR;
+	zoom_factor = ZOOM_FACTOR;
+}
+
+GlGlut::~GlGlut() {
+	// Nothing to do here
+}
+
+void GlGlut::setInstance() {
+	instance = this;
+}
+
+void GlGlut::start(int *argc, char *argv[]) {
+	setInstance();
+
+	// Init glut
+	glutInit(argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB);
+	glutInitWindowSize(screen_width, screen_height);
+	glutCreateWindow(WINDOW_TITLE);
+
+	// Register callbacks
+	glutDisplayFunc(displayWrapper);
+	glutKeyboardFunc(keyboardWrapper);
+	glutMouseFunc(mouseClickWrapper);
+	glutMotionFunc(mouseMoveWrapper);
+	glutReshapeFunc(reshapeWrapper);
+	glutSpecialFunc(specialWrapper);
+
+	// Start
+	reshape(screen_width, screen_height);
+	glutIdleFunc(idleWrapper);
+	glutMainLoop();
+}

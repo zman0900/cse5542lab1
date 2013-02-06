@@ -19,13 +19,7 @@ protected:
 	int screen_height;
 	float translate_factor;
 	float zoom_factor;
-public:
-	GlGlut();
-	~GlGlut();
-
-	// Starts scene, does not return
-	void start(int *argc, char *argv[]);
-
+	
 	// Glut callbacks
 	void display();
 	void idle();
@@ -35,9 +29,6 @@ public:
 	void reshape(int w, int h);
 	void special(int key, int mousex, int mousey);
 
-	// Called by start to make wrappers work
-	void setInstance();
-
 	////  Static wrappers used to register glut callbacks
 	static void displayWrapper();
 	static void idleWrapper();
@@ -46,6 +37,14 @@ public:
 	static void mouseMoveWrapper(int x, int y);
 	static void reshapeWrapper(int w, int h);
 	static void specialWrapper(int key, int mousex, int mousey);
+public:
+	GlGlut();
+	~GlGlut();
+
+	// Called by start to make wrappers work
+	void setInstance();
+	// Starts scene, does not return
+	void start(int *argc, char *argv[]);
 };
 
 #endif
