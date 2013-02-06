@@ -13,6 +13,9 @@
 #define ZOOM_FACTOR 1.5
 
 class GlGlut {
+private:
+	void deviceCoordToViewPort(int *x, int *y);
+	void deviceToWorldCoord(float *x, float *y);
 protected:
 	static GlGlut *instance;
 	int screen_width;
