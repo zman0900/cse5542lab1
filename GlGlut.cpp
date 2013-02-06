@@ -36,19 +36,25 @@ void GlGlut::keyboard(unsigned char key, int mousex, int mousey) {
 			exit(EXIT_SUCCESS);
 			break;
 		case 'a':
+			glMatrixMode(GL_PROJECTION);
 			glScalef(zoom_factor, zoom_factor, 1.);
 			translate_factor *= 1./zoom_factor;
+			glMatrixMode(GL_MODELVIEW);
 			glutPostRedisplay();
 			break;
 		case 'z':
+			glMatrixMode(GL_PROJECTION);
 			glScalef(1./zoom_factor, 1./zoom_factor, 1.);
 			translate_factor *= zoom_factor;
+			glMatrixMode(GL_MODELVIEW);
 			glutPostRedisplay();
 			break;
 		case 'q':
+			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
 			translate_factor = TRANSLATE_FACTOR;
 			zoom_factor = ZOOM_FACTOR;
+			glMatrixMode(GL_MODELVIEW);
 			glutPostRedisplay();
 			break;
 		default:
@@ -113,16 +119,24 @@ void GlGlut::reshape(int w, int h) {
 void GlGlut::special(int key, int mousex, int mousey) {
 	switch (key) {
 		case GLUT_KEY_LEFT:
+			glMatrixMode(GL_PROJECTION);
 			glTranslatef(-1.*translate_factor, 0., 0.);
+			glMatrixMode(GL_MODELVIEW);
 			break;
 		case GLUT_KEY_RIGHT:
+			glMatrixMode(GL_PROJECTION);
 			glTranslatef(translate_factor, 0., 0.);
+			glMatrixMode(GL_MODELVIEW);
 			break;
 		case GLUT_KEY_UP:
+			glMatrixMode(GL_PROJECTION);
 			glTranslatef(0., translate_factor, 0.);
+			glMatrixMode(GL_MODELVIEW);
 			break;
 		case GLUT_KEY_DOWN:
+			glMatrixMode(GL_PROJECTION);
 			glTranslatef(0., -1.*translate_factor, 0.);
+			glMatrixMode(GL_MODELVIEW);
 			break;
 		default:
 			cout << "unused special: " << key << endl;
@@ -200,6 +214,12 @@ void GlGlut::start(int *argc, char *argv[]) {
 	glutMotionFunc(mouseMoveWrapper);
 	glutReshapeFunc(reshapeWrapper);
 	glutSpecialFunc(specialWrapper);
+
+	// Setup
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 
 	// Start
 	buildMenu();
