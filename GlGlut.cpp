@@ -4,12 +4,23 @@ using namespace std;
 
 GlGlut *GlGlut::instance = NULL;
 
+void GlGlut::buildMenu() {
+	glutCreateMenu(menuClickWrapper);
+	glutAddMenuEntry("White", MENU_WHITE);
+	glutAddMenuEntry("Red", MENU_RED);
+	glutAddMenuEntry("Green", MENU_GREEN);
+	glutAddMenuEntry("Blue", MENU_BLUE);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
+}
+
 //// Glut callbacks /////
 void GlGlut::display() {
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	glColor3f(.5, .5, .5);
 	glRectf(-.5, -.5, .5, .5);
+	glColor3f(colorr, colorg, colorb);
 
 	glutSwapBuffers();
 }
@@ -44,6 +55,38 @@ void GlGlut::keyboard(unsigned char key, int mousex, int mousey) {
 			cout << "unused key: " << (int) key << endl;
 			break;
 	}
+}
+
+void GlGlut::menuClick(int value) {
+	switch (value) {
+		case MENU_WHITE:
+			colorr = 1.;
+			colorg = 1.;
+			colorb = 1.;
+			cout << "Color now white" << endl;
+			break;
+		case MENU_RED:
+			colorr = 1.;
+			colorg = 0.;
+			colorb = 0.;
+			cout << "Color now red" << endl;
+			break;
+		case MENU_GREEN:
+			colorr = 0.;
+			colorg = 1.;
+			colorb = 0.;
+			cout << "Color now green" << endl;
+			break;
+		case MENU_BLUE:
+			colorr = 0.;
+			colorg = 0.;
+			colorb = 1.;
+			cout << "Color now blue" << endl;
+			break;
+	}
+	glColor3f(colorr, colorg, colorb);
+	// TODO: Set color of current polyline
+	glutPostRedisplay();
 }
 
 void GlGlut::mouseClick(int button, int state, int x, int y) {
@@ -102,6 +145,10 @@ void GlGlut::keyboardWrapper(unsigned char key, int mousex, int mousey) {
 	instance->keyboard(key, mousex, mousey);
 }
 
+void GlGlut::menuClickWrapper(int value) {
+	instance->menuClick(value);
+}
+
 void GlGlut::mouseClickWrapper(int button, int state, int x, int y) {
 	instance->mouseClick(button, state, x, y);
 }
@@ -124,6 +171,9 @@ GlGlut::GlGlut() {
 	screen_height = DEF_SCREEN_H;
 	translate_factor = TRANSLATE_FACTOR;
 	zoom_factor = ZOOM_FACTOR;
+	colorr = 1.;
+	colorg = 1.;
+	colorb = 1.;
 }
 
 GlGlut::~GlGlut() {
@@ -152,6 +202,7 @@ void GlGlut::start(int *argc, char *argv[]) {
 	glutSpecialFunc(specialWrapper);
 
 	// Start
+	buildMenu();
 	reshape(screen_width, screen_height);
 	glutIdleFunc(idleWrapper);
 	glutMainLoop();

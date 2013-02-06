@@ -19,11 +19,20 @@ protected:
 	int screen_height;
 	float translate_factor;
 	float zoom_factor;
+	float colorr, colorb, colorg;
+
+	static const int MENU_WHITE = 0;
+	static const int MENU_RED = 1;
+	static const int MENU_GREEN = 2;
+	static const int MENU_BLUE = 3;
+
+	void buildMenu();
 	
 	// Glut callbacks
 	void display();
 	void idle();
 	void keyboard(unsigned char key, int mousex, int mousey);
+	void menuClick(int value);
 	void mouseClick(int button, int state, int x, int y);
 	void mouseMove(int x, int y);
 	void reshape(int w, int h);
@@ -33,6 +42,7 @@ protected:
 	static void displayWrapper();
 	static void idleWrapper();
 	static void keyboardWrapper(unsigned char key, int mousex, int mousey);
+	static void menuClickWrapper(int value);
 	static void mouseClickWrapper(int button, int state, int x, int y);
 	static void mouseMoveWrapper(int x, int y);
 	static void reshapeWrapper(int w, int h);
