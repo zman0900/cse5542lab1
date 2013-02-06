@@ -30,14 +30,20 @@ void GlGlut::start(int *argc, char *argv[]) {
 	glutReshapeFunc(reshapeWrapper);
 
 	// Start
+	glutIdleFunc(idleWrapper);
 	glutMainLoop();
 }
 
+//// Glut callbacks /////
 void GlGlut::display() {
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glutSwapBuffers();
+}
+
+void GlGlut::idle() {
+
 }
 
 void GlGlut::keyboard(unsigned char key, int mousex, int mousey) {
@@ -55,14 +61,19 @@ void GlGlut::mouseMove(int x, int y) {
 void GlGlut::reshape(int w, int h) {
 	
 }
+/////////////////////////
 
 void GlGlut::setInstance() {
 	instance = this;
 }
 
-//// Static wrappers
+//// Static wrappers ////
 void GlGlut::displayWrapper() {
 	instance->display();
+}
+
+void GlGlut::idleWrapper() {
+	instance->idle();
 }
 
 void GlGlut::keyboardWrapper(unsigned char key, int mousex, int mousey) {
@@ -80,3 +91,4 @@ void GlGlut::mouseMoveWrapper(int x, int y) {
 void GlGlut::reshapeWrapper(int w, int h) {
 	instance->reshape(w, h);
 }
+/////////////////////////

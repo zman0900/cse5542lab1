@@ -23,6 +23,7 @@ public:
 
 	// Glut callbacks
 	void display();
+	void idle();
 	void keyboard(unsigned char key, int mousex, int mousey);
 	void mouseClick(int button, int state, int x, int y);
 	void mouseMove(int x, int y);
@@ -33,6 +34,7 @@ public:
 
 	////  Static wrappers used to register glut callbacks
 	static void displayWrapper();
+	static void idleWrapper();
 	static void keyboardWrapper(unsigned char key, int mousex, int mousey);
 	static void mouseClickWrapper(int button, int state, int x, int y);
 	static void mouseMoveWrapper(int x, int y);
