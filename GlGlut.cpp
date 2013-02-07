@@ -106,6 +106,26 @@ void GlGlut::keyboard(unsigned char key, int mousex, int mousey) {
 		case 'c':
 			lines.clear();
 			break;
+		case 'f':
+			if (lines.size() > 0) {
+				lines.back().addPoint();
+			}
+			break;
+		case 't':
+			if (lines.size() > 0) {
+				lines.back().rotate();
+			}
+			break;
+		case 'S':
+			if (lines.size() > 0) {
+				lines.back().enlarge();
+			}
+			break;
+		case 's':
+			if (lines.size() > 0) {
+				lines.back().shrink();
+			}
+			break;
 		default:
 			cout << "unused key: " << (int) key << endl;
 			break;

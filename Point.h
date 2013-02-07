@@ -10,7 +10,11 @@ public:
 	Point(float x, float y);
 	~Point();
 
+	float getX();
+	float getY();
 	void render();
+	void setX(float x);
+	void setY(float y);
 };
 
 #endif
