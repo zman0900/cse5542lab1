@@ -23,6 +23,7 @@ protected:
 	static GlGlut *instance;
 	int screen_width;
 	int screen_height;
+	int menu_visible;
 	float translate_factor;
 	float zoom_factor;
 	float colorr, colorb, colorg;
@@ -40,6 +41,7 @@ protected:
 	void idle();
 	void keyboard(unsigned char key, int mousex, int mousey);
 	void menuClick(int value);
+	void menuStatus(int status, int x, int y);
 	void mouseClick(int button, int state, int x, int y);
 	void reshape(int w, int h);
 	void special(int key, int mousex, int mousey);
@@ -49,6 +51,7 @@ protected:
 	static void idleWrapper();
 	static void keyboardWrapper(unsigned char key, int mousex, int mousey);
 	static void menuClickWrapper(int value);
+	static void menuStatusWrapper(int status, int x, int y);
 	static void mouseClickWrapper(int button, int state, int x, int y);
 	static void reshapeWrapper(int w, int h);
 	static void specialWrapper(int key, int mousex, int mousey);

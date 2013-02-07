@@ -54,6 +54,7 @@ void GlGlut::buildMenu() {
 	glutAddMenuEntry("Green", MENU_GREEN);
 	glutAddMenuEntry("Blue", MENU_BLUE);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
+	glutMenuStatusFunc(menuStatusWrapper);
 }
 
 //// Glut callbacks /////
@@ -183,8 +184,17 @@ void GlGlut::menuClick(int value) {
 	glutPostRedisplay();
 }
 
+void GlGlut::menuStatus(int status, int x, int y) {
+	cout << "menu status: " << status << endl;
+	if (status == GLUT_MENU_IN_USE) {
+		menu_visible = 1;
+	} else {
+		menu_visible = 0;
+	}
+}
+
 void GlGlut::mouseClick(int button, int state, int x, int y) {
-	if (state == GLUT_UP && button == GLUT_LEFT_BUTTON) {
+	if (state == GLUT_UP && button == GLUT_LEFT_BUTTON && !menu_visible) {
 		//cout << "click b:" << button << " x:" << x << " y:" << y << endl;
 		deviceCoordToViewPort(x, y);
 		if (x < 0 || y < 0) {
@@ -259,6 +269,10 @@ void GlGlut::menuClickWrapper(int value) {
 	instance->menuClick(value);
 }
 
+void GlGlut::menuStatusWrapper(int status, int x, int y) {
+	instance->menuStatus(status, x, y);
+}
+
 void GlGlut::mouseClickWrapper(int button, int state, int x, int y) {
 	instance->mouseClick(button, state, x, y);
 }
@@ -275,6 +289,7 @@ void GlGlut::specialWrapper(int key, int mousex, int mousey) {
 GlGlut::GlGlut() {
 	screen_width = DEF_SCREEN_W;
 	screen_height = DEF_SCREEN_H;
+	menu_visible = 0;
 	translate_factor = TRANSLATE_FACTOR;
 	zoom_factor = ZOOM_FACTOR;
 	colorr = 1.;
