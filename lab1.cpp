@@ -9,6 +9,7 @@ int main(int argc, char *argv[]) {
 	cout << "Dan Ziemba, 2013" << endl << endl;
 	cout << "Controls:" << endl;
 	cout << "\tarrows - Pan" << endl;
+	cout << "\tclick - start new ployline at mouse" << endl;
 	cout << "\t'a' - zoom in" << endl;
 	cout << "\t'z' - zoom out" << endl;
 	cout << "\t'q' - reset pan and zoom" << endl;
@@ -19,7 +20,7 @@ int main(int argc, char *argv[]) {
 	cout << "\t'p' - draw polygon" << endl;
 	cout << "\t'n' - draw star" << endl;
 	cout << "\t'r' - draw spiral" << endl;
-	cout << "\tclick - start new ployline at mouse" << endl;
+	cout << "\t'c' - remove all polylines" << endl;
 
 	GlGlut g;
 	g.start(&argc, argv);

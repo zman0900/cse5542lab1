@@ -89,14 +89,12 @@ void GlGlut::keyboard(unsigned char key, int mousex, int mousey) {
 			glScalef(zoom_factor, zoom_factor, 1.);
 			translate_factor *= 1./zoom_factor;
 			glMatrixMode(GL_MODELVIEW);
-			glutPostRedisplay();
 			break;
 		case 'z':
 			glMatrixMode(GL_PROJECTION);
 			glScalef(1./zoom_factor, 1./zoom_factor, 1.);
 			translate_factor *= zoom_factor;
 			glMatrixMode(GL_MODELVIEW);
-			glutPostRedisplay();
 			break;
 		case 'q':
 			glMatrixMode(GL_PROJECTION);
@@ -104,12 +102,15 @@ void GlGlut::keyboard(unsigned char key, int mousex, int mousey) {
 			translate_factor = TRANSLATE_FACTOR;
 			zoom_factor = ZOOM_FACTOR;
 			glMatrixMode(GL_MODELVIEW);
-			glutPostRedisplay();
+			break;
+		case 'c':
+			lines.clear();
 			break;
 		default:
 			cout << "unused key: " << (int) key << endl;
 			break;
 	}
+	glutPostRedisplay();
 }
 
 void GlGlut::menuClick(int value) {
