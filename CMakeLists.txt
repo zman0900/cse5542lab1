@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 project (cse5542lab1)
-add_executable (lab1 lab1.cpp GlGlut.cpp)
+add_executable (lab1 lab1.cpp GlGlut.cpp Polyline.cpp Point.cpp)
 if (WIN32)
 	include_directories(${CMAKE_SOURCE_DIR}/win32/include)
 	target_link_libraries (lab1 ${CMAKE_SOURCE_DIR}/win32/lib/freeglut.lib GL)

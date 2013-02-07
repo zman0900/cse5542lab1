@@ -3,8 +3,11 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <list>
 
 #include <GL/glut.h>
+
+#include "Polyline.h"
 
 #define DEF_SCREEN_W 800
 #define DEF_SCREEN_H 800
@@ -23,6 +26,7 @@ protected:
 	float translate_factor;
 	float zoom_factor;
 	float colorr, colorb, colorg;
+	std::list<Polyline> lines;
 
 	static const int MENU_WHITE = 0;
 	static const int MENU_RED = 1;

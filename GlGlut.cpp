@@ -61,9 +61,15 @@ void GlGlut::display() {
 	glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	// Display gray rectangle in middle
 	glColor3f(.5, .5, .5);
 	glRectf(-.5, -.5, .5, .5);
 	glColor3f(colorr, colorg, colorb);
+
+	// Display polylines
+	for (list<Polyline>::iterator it = lines.begin(); it != lines.end(); ++it) {
+		(*it).render();
+	}
 
 	glutSwapBuffers();
 }
@@ -134,7 +140,10 @@ void GlGlut::menuClick(int value) {
 			break;
 	}
 	glColor3f(colorr, colorg, colorb);
-	// TODO: Set color of current polyline
+	// Set color of current polyline
+	if (lines.size() > 0) {
+		lines.back().setColor(colorr, colorg, colorb);
+	}
 	glutPostRedisplay();
 }
 
@@ -149,6 +158,8 @@ void GlGlut::mouseClick(int button, int state, int x, int y) {
 			float wy = y;
 			deviceToWorldCoord(&wx, &wy);
 			cout << "after: x:" << wx << " y:" << wy << endl;
+			lines.push_back(Polyline(wx, wy, colorr, colorg, colorb));
+			glutPostRedisplay();
 		}
 	}
 }
