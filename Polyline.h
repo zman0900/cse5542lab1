@@ -10,6 +10,14 @@
 
 #define DEF_U 0.0
 #define DEF_V 0.04
+#define POLYGON_SIDES 5
+#define POLYGON_SIZE 0.5
+#define STAR_SIDES 5
+#define STAR_SIZE 0.5
+#define SPIRAL_START_SIZE 0.05
+#define SPIRAL_START_ANGLE (M_PI/2)
+#define SPIRAL_SCALE_FACTOR 0.95
+#define SPIRAL_ITERATIONS 40
 
 class Polyline {
 protected:
@@ -19,11 +27,15 @@ protected:
 	Point *prev;
 
 	void recalcLatest();
+	void turn(float theta);
 public:
 	Polyline(float x, float y, float colorr, float colorg, float colorb);
 	~Polyline();
 
 	void addPoint();
+	void addPolygon();
+	void addSpiral();
+	void addStar();
 	void enlarge();
 	void render();
 	void rotate();

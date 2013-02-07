@@ -126,6 +126,21 @@ void GlGlut::keyboard(unsigned char key, int mousex, int mousey) {
 				lines.back().shrink();
 			}
 			break;
+		case 'p':
+			if (lines.size() > 0) {
+				lines.back().addPolygon();
+			}
+			break;
+		case 'n':
+			if (lines.size() > 0) {
+				lines.back().addStar();
+			}
+			break;
+		case 'r':
+			if (lines.size() > 0) {
+				lines.back().addSpiral();
+			}
+			break;
 		default:
 			cout << "unused key: " << (int) key << endl;
 			break;

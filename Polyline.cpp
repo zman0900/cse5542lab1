@@ -10,6 +10,13 @@ void Polyline::recalcLatest() {
 	}
 }
 
+void Polyline::turn(float theta) {
+	float un = u * cos(theta) - v * sin(theta);
+	float vn = u * sin(theta) + v * cos(theta);
+	u = un;
+	v = vn;
+}
+
 Polyline::Polyline(float x, float y, float _colorr, float _colorg,
                    float _colorb) {
     colorr = _colorr;
@@ -27,6 +34,54 @@ Polyline::~Polyline() {
 void Polyline::addPoint() {
 	prev = &points.back();
 	points.push_back(Point(prev->getX() + u, prev->getY() + v));
+}
+
+void Polyline::addPolygon() {
+	// Save u, v
+	float m = u, n = v;
+
+	u = POLYGON_SIZE;
+	v = 0.0;
+	for (int i = 0; i < POLYGON_SIDES; i++) {
+		turn(2*M_PI/POLYGON_SIDES);
+		addPoint();
+	}
+
+	// Restore u, v
+	u = m; v = n;
+}
+
+void Polyline::addSpiral() {
+	// Save u, v
+	float m = u, n = v;
+
+	u = SPIRAL_START_SIZE;
+	v = 0.0;
+	float theta = SPIRAL_START_ANGLE;
+	for (int i = 0; i < SPIRAL_ITERATIONS; i++) {
+		turn(theta);
+		// scale
+		theta *= SPIRAL_SCALE_FACTOR;
+		addPoint();
+	}
+
+	// Restore u, v
+	u = m; v = n;
+}
+
+void Polyline::addStar() {
+	// Save u, v
+	float m = u, n = v;
+
+	u = STAR_SIZE;
+	v = 0.0;
+	for (int i = 0; i < STAR_SIDES; i++) {
+		turn(4*M_PI/STAR_SIDES);
+		addPoint();
+	}
+
+	// Restore u, v
+	u = m; v = n;
 }
 
 void Polyline::enlarge() {
@@ -55,11 +110,7 @@ void Polyline::render() {
 }
 
 void Polyline::rotate() {
-	float un, vn;
-	un = u * cos(M_PI/18) - v * sin(M_PI/18);
-	vn = u * sin(M_PI/18) + v * cos(M_PI/18);
-	u = un;
-	v = vn;
+	turn(M_PI/18);
 	recalcLatest();
 }
 
