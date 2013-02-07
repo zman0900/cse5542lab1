@@ -41,7 +41,6 @@ protected:
 	void keyboard(unsigned char key, int mousex, int mousey);
 	void menuClick(int value);
 	void mouseClick(int button, int state, int x, int y);
-	void mouseMove(int x, int y);
 	void reshape(int w, int h);
 	void special(int key, int mousex, int mousey);
 
@@ -51,7 +50,6 @@ protected:
 	static void keyboardWrapper(unsigned char key, int mousex, int mousey);
 	static void menuClickWrapper(int value);
 	static void mouseClickWrapper(int button, int state, int x, int y);
-	static void mouseMoveWrapper(int x, int y);
 	static void reshapeWrapper(int w, int h);
 	static void specialWrapper(int key, int mousex, int mousey);
 public:

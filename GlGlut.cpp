@@ -142,8 +142,8 @@ void GlGlut::keyboard(unsigned char key, int mousex, int mousey) {
 			}
 			break;
 		default:
-			cout << "unused key: " << (int) key << endl;
-			break;
+			//cout << "unused key: " << (int) key << endl;
+			return;
 	}
 	glutPostRedisplay();
 }
@@ -184,8 +184,8 @@ void GlGlut::menuClick(int value) {
 }
 
 void GlGlut::mouseClick(int button, int state, int x, int y) {
-	if (state == GLUT_UP) {
-		cout << "click b:" << button << " x:" << x << " y:" << y << endl;
+	if (state == GLUT_UP && button == GLUT_LEFT_BUTTON) {
+		//cout << "click b:" << button << " x:" << x << " y:" << y << endl;
 		deviceCoordToViewPort(x, y);
 		if (x < 0 || y < 0) {
 			cout << "click ignored" << endl;
@@ -193,15 +193,11 @@ void GlGlut::mouseClick(int button, int state, int x, int y) {
 			float wx = x;
 			float wy = y;
 			deviceToWorldCoord(wx, wy);
-			cout << "after: x:" << wx << " y:" << wy << endl;
+			//cout << "after: x:" << wx << " y:" << wy << endl;
 			lines.push_back(Polyline(wx, wy, colorr, colorg, colorb));
 			glutPostRedisplay();
 		}
 	}
-}
-
-void GlGlut::mouseMove(int x, int y) {
-	cout << "move x:" << x << " y:" << y << endl;
 }
 
 void GlGlut::reshape(int w, int h) {
@@ -240,8 +236,7 @@ void GlGlut::special(int key, int mousex, int mousey) {
 			glMatrixMode(GL_MODELVIEW);
 			break;
 		default:
-			cout << "unused special: " << key << endl;
-			break;
+			return;
 	}
 	glutPostRedisplay();
 }
@@ -266,10 +261,6 @@ void GlGlut::menuClickWrapper(int value) {
 
 void GlGlut::mouseClickWrapper(int button, int state, int x, int y) {
 	instance->mouseClick(button, state, x, y);
-}
-
-void GlGlut::mouseMoveWrapper(int x, int y) {
-	instance->mouseMove(x, y);
 }
 
 void GlGlut::reshapeWrapper(int w, int h) {
@@ -312,7 +303,6 @@ void GlGlut::start(int *argc, char *argv[]) {
 	glutDisplayFunc(displayWrapper);
 	glutKeyboardFunc(keyboardWrapper);
 	glutMouseFunc(mouseClickWrapper);
-	glutMotionFunc(mouseMoveWrapper);
 	glutReshapeFunc(reshapeWrapper);
 	glutSpecialFunc(specialWrapper);
 
