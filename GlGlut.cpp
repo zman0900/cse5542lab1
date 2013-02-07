@@ -4,24 +4,24 @@ using namespace std;
 
 GlGlut *GlGlut::instance = NULL;
 
-void GlGlut::deviceCoordToViewPort(int *x, int *y) {
+void GlGlut::deviceCoordToViewPort(int &x, int &y) {
 	// Adjust dev coords to square
 	if (screen_width > screen_height) {
-		*x -= (screen_width - screen_height) / 2;
-		if (*x < 0 || *x > screen_height) {
+		x -= (screen_width - screen_height) / 2;
+		if (x < 0 || x > screen_height) {
 			// Bad click
-			*x = -1; *y = -1; return;
+			x = -1; y = -1; return;
 		}
 	} else {
-		*y -= (screen_height - screen_width) / 2;
-		if (*y < 0 || *y > screen_width) {
+		y -= (screen_height - screen_width) / 2;
+		if (y < 0 || y > screen_width) {
 			// Bad click
-			*x = -1; *y = -1; return;
+			x = -1; y = -1; return;
 		}
 	}
 }
 
-void GlGlut::deviceToWorldCoord(float *x, float *y) {
+void GlGlut::deviceToWorldCoord(float &x, float &y) {
 	int dim;
 	if (screen_width > screen_height) {
 		dim = screen_height;
@@ -29,22 +29,22 @@ void GlGlut::deviceToWorldCoord(float *x, float *y) {
 		dim = screen_width;
 	}
 	// Dev to screen (flip y)
-	*y = dim - *y;
+	y = dim - y;
 	// Make center point origin 0,0
-	*x -= dim/2.;
-	*y -= dim/2.;
+	x -= dim/2.;
+	y -= dim/2.;
 	// Adjust to default world space (-1,1,-1,1)
-	*x /= dim/2.;
-	*y /= dim/2.;
+	x /= dim/2.;
+	y /= dim/2.;
 	// Get projection matrix
 	GLfloat params[16];
 	glGetFloatv(GL_PROJECTION_MATRIX, params);
 	// Adjust for translation
-	*x -= params[12];
-	*y -= params[13];
+	x -= params[12];
+	y -= params[13];
 	// Adjust for zoom
-	*x /= params[0];
-	*y /= params[5];
+	x /= params[0];
+	y /= params[5];
 }
 
 void GlGlut::buildMenu() {
@@ -171,13 +171,13 @@ void GlGlut::menuClick(int value) {
 void GlGlut::mouseClick(int button, int state, int x, int y) {
 	if (state == GLUT_UP) {
 		cout << "click b:" << button << " x:" << x << " y:" << y << endl;
-		deviceCoordToViewPort(&x, &y);
+		deviceCoordToViewPort(x, y);
 		if (x < 0 || y < 0) {
 			cout << "click ignored" << endl;
 		} else {
 			float wx = x;
 			float wy = y;
-			deviceToWorldCoord(&wx, &wy);
+			deviceToWorldCoord(wx, wy);
 			cout << "after: x:" << wx << " y:" << wy << endl;
 			lines.push_back(Polyline(wx, wy, colorr, colorg, colorb));
 			glutPostRedisplay();
