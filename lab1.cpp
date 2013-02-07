@@ -3,6 +3,7 @@
 #include "GlGlut.h"
 
 using namespace std;
+using namespace visualstudio_sucks;
 
 int main(int argc, char *argv[]) {
 	cout << "CSE 5542 - Lab 1" << endl;

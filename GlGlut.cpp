@@ -2,6 +2,8 @@
 
 using namespace std;
 
+namespace visualstudio_sucks {
+
 GlGlut *GlGlut::instance = NULL;
 
 void GlGlut::deviceCoordToViewPort(int &x, int &y) {
@@ -332,4 +334,6 @@ void GlGlut::start(int *argc, char *argv[]) {
 	reshape(screen_width, screen_height);
 	glutIdleFunc(idleWrapper);
 	glutMainLoop();
+}
+
 }

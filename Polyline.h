@@ -19,6 +19,8 @@
 #define SPIRAL_SCALE_FACTOR 0.95
 #define SPIRAL_ITERATIONS 40
 
+namespace visualstudio_sucks {
+
 class Polyline {
 protected:
 	std::list<Point> points;
@@ -42,5 +44,7 @@ public:
 	void setColor(float colorr, float colorg, float colorb);
 	void shrink();
 };
+
+}
 
 #endif

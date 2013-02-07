@@ -3,6 +3,8 @@
 
 #include <GL/glut.h>
 
+namespace visualstudio_sucks {
+
 class Point {
 protected:
 	float x, y;
@@ -16,5 +18,7 @@ public:
 	void setX(float x);
 	void setY(float y);
 };
+
+}
 
 #endif

@@ -2,6 +2,8 @@
 
 using namespace std;
 
+namespace visualstudio_sucks {
+
 Point::Point(float _x, float _y) {
 	x = _x;
 	y = _y;
@@ -28,4 +30,6 @@ void Point::setX(float _x) {
 
 void Point::setY(float _y) {
 	y = _y;
+}
+
 }

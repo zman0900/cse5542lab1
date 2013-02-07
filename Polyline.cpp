@@ -2,6 +2,8 @@
 
 using namespace std;
 
+namespace visualstudio_sucks {
+
 void Polyline::recalcLatest() {
 	if (prev != NULL) {
 		Point *p = &points.back();
@@ -124,4 +126,6 @@ void Polyline::shrink() {
 	u *= .5;
 	v *= .5;
 	recalcLatest();
+}
+
 }

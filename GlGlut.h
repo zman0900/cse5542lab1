@@ -15,6 +15,8 @@
 #define TRANSLATE_FACTOR 0.2
 #define ZOOM_FACTOR 1.5
 
+namespace visualstudio_sucks {
+
 class GlGlut {
 private:
 	void deviceCoordToViewPort(int &x, int &y);
@@ -64,5 +66,7 @@ public:
 	// Starts scene, does not return
 	void start(int *argc, char *argv[]);
 };
+
+}
 
 #endif
